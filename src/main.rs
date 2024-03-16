@@ -1,6 +1,6 @@
 fn inc_f(a: i32) -> impl Fn(i32) -> i32 {
-    move |x| x + a
-    // struct ClosureType { a: &i32 }
+    move |x| { let y = 3; x + y + a }
+    // struct ClosureType { a: i32 }
 }
 
 #[test]
@@ -9,9 +9,9 @@ fn test_inc_f() {
     assert_eq!(4, f(1));
 }
 
-fn append_f(a: &str) -> impl Fn(String) -> String + '_ {
+fn append_f(s: &str) -> impl Fn(String) -> String + '_ {
     |mut x| {
-        x.push_str(a);
+        x.push_str(s);
         x
     }
 }
@@ -48,6 +48,20 @@ fn test_lifetimes() {
     drop(s);
     println!("{}", f("x".to_string()));
 }
+*/
+
+/*
+const fn f() -> u32 {
+    17
+}
+
+const fn g() -> u32 {
+    19
+}
+
+static F: u32 = f();
+
+static FNS: &[fn() -> u32] = &[f, g];
 */
 
 #[test]
